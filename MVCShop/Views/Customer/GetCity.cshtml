@@ -1,0 +1,9 @@
+﻿@model MVCShop.Models.customer
+
+    @Html.Label("市", new { @class = "control-label col-md-2" })
+    <div class="col-md-10" id="city">
+        @Html.DropDownListFor(model => model.city, ViewBag.CityLst as SelectList)
+        @Html.ValidationMessageFor(model => model.city)
+    </div>
+
+

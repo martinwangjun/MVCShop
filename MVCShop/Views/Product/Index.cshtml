@@ -1,0 +1,50 @@
+﻿@model PagedList.PagedList<MVCShop.Models.product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "产品查询";
+}
+
+<h2>产品查询</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.DropDownList("SearchBy", (IEnumerable<SelectListItem>)ViewBag.searchByList)
+        @Html.TextBox("SearchString")
+        <input type="submit" value="搜索" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().f_catnbr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().f_sku_code)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.f_catnbr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.f_sku_code)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.f_product_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.f_product_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.f_product_id })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { ViewBag.searchBy, ViewBag.searchString, page }), new PagedListRenderOptions { LinkToFirstPageFormat = "首页", LinkToPreviousPageFormat = "上一页", LinkToNextPageFormat = "下一页", LinkToLastPageFormat = "尾页", MaximumPageNumbersToDisplay = 5 })
